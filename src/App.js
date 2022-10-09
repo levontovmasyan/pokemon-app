@@ -1,40 +1,27 @@
-// import './App.css';
-// import {Routes , Route ,NavLink , Navigate} from 'react-router-dom'
-// import PokemonListing from './containers/PokemonListing';
-// import PokemonDetail from './containers/PokemonDetail';
-// function App() {
-//   return (
-//     <div className="App">
-//       <nav>
-//         <NavLink to={'/'} >Search</NavLink>
-//       </nav>
-//      <Routes>
-//       <Route path={'/'} exact element={<PokemonListing />} />
-//       <Route path={'/pokemon/:pokemon'} exact element={<PokemonDetail></PokemonDetail>} />
-//       <Route render={() => <Navigate to="/" />} />
-//      </Routes>
-//     </div>
-//   );
-// }
-
-// export default App;
-
-
-import React from 'react';
-import './App.css';
-import {Routes, Route, NavLink, Redirect} from "react-router-dom";
+import React from "react";
+import "./App.css";
+import { Routes, Route, Link } from "react-router-dom";
 import PokemonList from "./containers/PokemonList";
 import Pokemon from "./containers/Pokemon";
-
+import Error from "./pages/Error";
+import About from "./pages/About";
 function App() {
   return (
     <div className="App">
       <nav>
-        <NavLink to={"/"}>Get back to main page</NavLink>
+        <Link to={"/"}>Pokemon Page</Link>
+        <Link to={"/aboutUs"}>aboutUs</Link>
       </nav>
       <Routes>
+        <Route path={"/aboutUs"} exact element={<About />} />
+        <Route path={"/pokemons/:page"} exact element={<PokemonList />} />
         <Route path={"/"} exact element={<PokemonList />} />
-        <Route path={"/pokemon/:pokemon"} exact element={<Pokemon />} />
+        <Route path={"*"} exact element={<Error />} />
+        <Route
+          path={"/pokemons/pokemon/:pokemon"}
+          exact
+          element={<Pokemon />}
+        />
       </Routes>
     </div>
   );

@@ -1,35 +1,36 @@
+import { ActionTypes } from "../actions/type-actions";
 const DefaultState = {
   loading: false,
   data: [],
   errMsg: "",
-  count: 0
+  count: 0,
 };
 
 const PokemonListReducer = (state = DefaultState, action) => {
   switch (action.type) {
-    case "POKEMON_LIST_LOADING":
+    case ActionTypes.POKEMON_LIST_LOADING:
       return {
         ...state,
         loading: true,
-        errMsg: ""
+        errMsg: "",
       };
-    case "POKEMON_LIST_FAIL":
+    case ActionTypes.POKEMON_LIST_FAIL:
       return {
         ...state,
         loading: false,
-        errMsg: "unable to get pokemon"
+        errMsg: "unable to get pokemon",
       };
-    case "POKEMON_LIST_SUCCESS":
+    case ActionTypes.POKEMON_LIST_SUCCESS:
       return {
         ...state,
         loading: false,
         data: action.payload.results,
         errMsg: "",
-        count: action.payload.count
+        count: action.payload.count,
       };
     default:
-      return state
+      return state;
   }
 };
 
-export default PokemonListReducer
+export default PokemonListReducer;
