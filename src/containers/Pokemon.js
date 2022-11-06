@@ -3,24 +3,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { GetPokemon } from "../actions/pokemonActions";
 import PokemonTypes from "./PokemonTypes";
+import Loading from '../pages/Loading'
 import _ from "lodash";
 const Pokemon = () => {
   const { pokemon } = useParams();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch();  
   const pokemonState = useSelector((state) => state.Pokemon);
   React.useEffect(() => {
     dispatch(GetPokemon(pokemon));
-  }, []);
+  }, [pokemon]);
   const pokeData = pokemonState.data[pokemon];
   return (
     <div className={"poke"}>
+      {pokemonState.loading ?<Loading /> : null}
       {pokeData === undefined ? (
         <div>
-          <h1>Error was found</h1>
           <h1>{pokemonState.errMsg}</h1>
           <h1>
             Get back to{" "}
-            <Link to={"/"} className="back">
+            <Link to={`/pokemons/:page`} className="back">
               main page
             </Link>
             ?
@@ -29,8 +30,15 @@ const Pokemon = () => {
       ) : null}
       {!_.isEmpty(pokeData) ? (
         <>
-          <div className="whole-div">
-            <h1>{pokemon}</h1>
+          <div className="whole-div bg-white">
+          <p className="poke-back">
+              Get back to
+              <Link to={"/"} className="back">
+                main page
+              </Link>
+              ?
+            </p>
+            <h1>{pokemon}</h1> 
 
             <div className={"pokemon-div"}>
               <div className={"img-div"}>
@@ -78,18 +86,10 @@ const Pokemon = () => {
                 <PokemonTypes />
               </div>
             </div>
-            <p className="poke-back">
-              Get back to{" "}
-              <Link to={"/"} className="back">
-                {" "}
-                main page
-              </Link>
-              ?
-            </p>
+            
           </div>
         </>
       ) : null}
-      {pokemonState.loading && <p>Loading...</p>}
       {pokemonState.errorMsg !== "" && <p>{pokemonState.errorMsg}</p>}
     </div>
   );

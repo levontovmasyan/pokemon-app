@@ -4,11 +4,11 @@ import _ from "lodash";
 import { GetPokemonList } from "../actions/pokemonActions";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
-
+import Loading from "../pages/Loading";
 const PokemonList = (props) => {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
-  let { page } = useParams();
+  const { page } = useParams();
   const dispatch = useDispatch();
   const pokemonList = useSelector((state) => state.PokemonList);
 
@@ -16,9 +16,12 @@ const PokemonList = (props) => {
     dispatch(GetPokemonList(page));
   };
 
-  useEffect(() => {
-    FetchData(page);
-  }, [page]);
+  useEffect(
+    (page) => {
+      FetchData(page);
+    },
+    [page]
+  );
 
   const handleSearch = (event) => {
     const result = event.target.value.toLowerCase();
@@ -37,20 +40,26 @@ const PokemonList = (props) => {
       </div>
 
       <div>
-        {pokemonList.loading ? <p>Loading...</p> : null}
         {!_.isEmpty(pokemonList.data) ? (
           <div>
             <div className={"list-wrapper"}>
-              {pokemonList.data.map((el) => {
-                return (
-                  <div className={"pokemon-item"} key={el.url}>
-                    <h2>{el.name}</h2>
-                    <Link className="more" to={`/pokemons/pokemon/${el.name}`}>
-                      More...
-                    </Link>
-                  </div>
-                );
-              })}
+              {pokemonList.loading ? (
+                <Loading />
+              ) : (
+                pokemonList.data.map((el) => {
+                  return (
+                    <div className={"pokemon-item"} key={el.url}>
+                      <h2>{el.name}</h2>
+                      <Link
+                        className="more"
+                        to={`/pokemons/pokemon/${el.name}`}
+                      >
+                        More...
+                      </Link>
+                    </div>
+                  );
+                })
+              )}
             </div>
             <ReactPaginate
               pageCount={Math.ceil(pokemonList.count / 15)}
