@@ -14,7 +14,6 @@ function App() {
       </nav>
       <Routes>
       <Route path="/" element={<Navigate to="/pokemons/1" />} />
-      <Route path="/pokemon-app/" element={<Navigate to="/pokemons/1" />} />
         <Route path={"/aboutUs"} exact element={<About />} />
         <Route path={"/pokemons/:page"} exact element={<PokemonList />} />
         <Route path={"*"} exact element={<Error />} />
