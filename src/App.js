@@ -13,7 +13,7 @@ function App() {
         <Link to={"/aboutUs"}>aboutUs</Link>
       </nav>
       <Routes>
-      <Route path="/" element={<Navigate to="/pokemons/1" />} />
+      <Route path="/" element={<Navigate to="/pokemon-app/" />} />
         <Route path={"/aboutUs"} exact element={<About />} />
         <Route path={"/pokemons/:page"} exact element={<PokemonList />} />
         <Route path={"*"} exact element={<Error />} />
